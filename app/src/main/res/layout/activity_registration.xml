@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/green"
+        android:padding="@dimen/layout_padding2"
+        tools:context=".Activities.RegistrationActivity">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/ivBrowse"
+            android:layout_width="@dimen/userProfileDimension"
+            android:layout_height="@dimen/userProfileDimension"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/user" />
+
+        <EditText
+            android:id="@+id/edtName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ivBrowse"
+            android:layout_marginTop="@dimen/layout_padding"
+            android:background="@drawable/rectangle"
+            android:hint="@string/yourName"
+            android:inputType="text"
+            android:padding="@dimen/view_padding" />
+
+        <EditText
+            android:id="@+id/edtUserName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/edtName"
+            android:layout_marginTop="@dimen/layout_padding"
+            android:background="@drawable/rectangle"
+            android:inputType="text"
+            android:padding="@dimen/view_padding" />
+
+        <EditText
+            android:id="@+id/edtPhone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/edtUserName"
+            android:layout_marginTop="@dimen/layout_padding"
+            android:background="@drawable/rectangle"
+            android:inputType="phone"
+            android:padding="@dimen/view_padding" />
+
+        <Button
+            android:id="@+id/btnSave"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/edtPhone"
+            android:layout_marginTop="@dimen/layout_padding"
+            android:background="@drawable/button_shape"
+            android:text="Save"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/txt_size_2" />
+
+    </RelativeLayout>
+</ScrollView>

@@ -1,0 +1,82 @@
+<resources>
+    <string name="shared_prefrences">trackChild</string>
+    <string name="app_name">TrackChild</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="confirm_message">Confirm</string>
+
+    <string name="user_is_txt">User is:</string>
+    <string name="parent_txt">Parent</string>
+    <string name="child_txt">Child</string>
+    <string name="user_is_child_txt">Your Mobile is tracked and controlled by your parent\'s mobile</string>
+
+    <string name="device_selection_txt">Select your child\'s device</string>
+    <string name="device_scanning_txt">Scan for Devices</string>
+
+    <string name="track_child_txt">Track my child</string>
+    <string name="get_loc_txt">Get location by SMS</string>
+    <string name="longitude">Longitude</string>
+    <string name="latitude">Latitude  </string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <!--Dialog messages-->
+    <string name="dialog_save_device">Are you sure you want to save this device?</string>
+    <string name="track_is_stop">Turning Bluetooth off is stopping tracking your child</string>
+    <string name="out_of_range">Your Child\'s Device is out of Range.Do you want to get your child location?</string>
+
+    <!--Permissions-->
+    <string name="IsFirstLocationPer">isFirstLocationPer</string>
+    <string name="location_first_deny">To use application you must allow access location.Do you want continue?</string>
+    <string name="location_never_ask_deny">To use application you must allow access location.Do you want go to setting?</string>
+
+    <string name="IsFirstBLTPer">isFirstBLTPer</string>
+    <string name="BLT_first_deny">To use application you must allow access Bluetooth.Do you want continue?</string>
+    <string name="BLT_never_ask_deny">To use application you must allow access Bluetooth.Do you want go to setting?</string>
+
+    <string name="IsFirstSMSPer">isFirstSMSPer</string>
+    <string name="SMS_first_deny">To use application you must allow read and sent SMS .Do you want continue?</string>
+    <string name="SMS_never_ask_deny">To use application you must allow read and sent SMS.Do you want go to setting?</string>
+
+    <string name="IsFirstCameraPer">isFirstCameraPer</string>
+    <string name="camera_first_deny">To set profile picture by camera you must allow access camera .Do you want continue?</string>
+    <string name="camera_never_ask_deny">To set profile picture by camera you must allow access camera.Do you want go to setting?</string>
+
+    <string name="IsFirstSDPer">isFirstSDPer</string>
+    <string name="SD_first_deny">To set profile picture from gallery you must allow access SD card .Do you want continue?</string>
+    <string name="SD_never_ask_deny">To set profile picture from gallery you must allow access SD card.Do you want go to setting?</string>
+
+<string name="location_is_granted">location_is_granted</string>
+    <string name="sms_is_granted">sms_is_granted</string>
+
+    <string name="blt_is_granted">blt_is_granted</string>
+
+    <!--Main Activity-->
+    <string name="ParentSingUP">Parent sing up</string>
+    <string name="ChildSingUP">Child sing up</string>
+    <!--Register Activity -->
+    <string name="yourName">Your name</string>
+    <string name="childName">Child name</string>
+    <string name="childPhone">Child phone no.</string>
+    <string name="parentName">Parent name</string>
+    <string name="parentPhone">Parent phone no.</string>
+
+
+    <!-- Shared Preferences Keys -->
+    <string name="Key_ChildName">childName</string>
+    <string name="Key_ChildPhone">childPhone</string>
+    <string name="Key_ChildImage">childImage</string>
+    <string name="Key_ChildDeviceName">childDeviceName</string>
+    <string name="Key_ChildDeviceAddressMac">childDeviceAddressMac</string>
+
+    <string name="Key_ParentName">parentName</string>
+    <string name="Key_ParentPhone">parentPhone</string>
+    <string name="Key_ParentImage">parentImage</string>
+    <string name="Key_ParentDeviceName">parentDeviceName</string>
+    <string name="Key_ParentDeviceAddressMac">parentDeviceAddressMac</string>
+    <string name="Key_UserType">userType</string>
+
+    <string name="IS_CHECKED">isChecked</string>
+
+
+</resources>
