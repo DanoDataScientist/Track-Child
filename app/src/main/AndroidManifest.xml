@@ -1,23 +1,23 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.bmh.trackchild"
     android:versionCode="1"
-    android:versionName="1.0" >
+    android:versionName="1.0">
 
     <permission
         android:name="com.bmh.trackchild.permission.MAPS_RECEIVE"
         android:protectionLevel="signature" />
 
-    <uses-permission android:name="com.bmh.trackchild.permission.MAPS_RECEIVE"/>
+    <uses-permission android:name="com.bmh.trackchild.permission.MAPS_RECEIVE" />
 
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
-    <uses-permission android:name="android.permission.SEND_SMS"/>
+    <uses-permission android:name="android.permission.SEND_SMS" />
     <uses-permission android:name="android.permission.READ_SMS" />
-    <uses-permission android:name="android.permission.RECEIVE_SMS"/>
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
 
-    <uses-permission android:name="android.permission.BLUETOOTH"/>
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -43,34 +43,39 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme.NoActionBar" >
+        android:theme="@style/AppTheme.NoActionBar">
 
         <activity android:name=".Activities.MainActivity">
-            <intent-filter >
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name="com.bmh.trackchild.Activities.RegistrationActivity"></activity>
         <activity android:name="com.bmh.trackchild.Activities.ChildActivity"></activity>
         <activity android:name="com.bmh.trackchild.Activities.ChildDeviceActivity"></activity>
         <activity android:name="com.bmh.trackchild.Activities.TrackActivity"></activity>
-        <activity android:name="com.bmh.trackchild.Activities.BluetoothAvailabilityActivity"
+        <activity
+            android:name="com.bmh.trackchild.Activities.BluetoothAvailabilityActivity"
             android:launchMode="singleInstance"
             android:theme="@android:style/Theme.Translucent"></activity>
-        <activity android:name="com.bmh.trackchild.ChildLocation"></activity>
-
+        <activity android:name="com.bmh.trackchild.Activities.ChildLocationActivity"></activity>
+        <activity
+            android:name=".Activities.OutRangeActivity"
+            android:launchMode="singleInstance"
+            android:theme="@android:style/Theme.Translucent"></activity>
 
         <service android:name="com.bmh.trackchild.services.GPSLocationService"></service>
         <service android:name="com.bmh.trackchild.services.BluetoothService"></service>
+
         <receiver android:name="com.bmh.trackchild.reciever.SMSReceiver">
-            <intent-filter  android:priority="1000" >
+            <intent-filter android:priority="1000">
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
         </receiver>
         <receiver android:name="com.bmh.trackchild.reciever.BluetoothAvailability">
-            <intent-filter >
-                <action android:name="android.bluetooth.adapter.action.STATE_CHANGED"/>
+            <intent-filter>
+                <action android:name="android.bluetooth.adapter.action.STATE_CHANGED" />
             </intent-filter>
         </receiver>
 

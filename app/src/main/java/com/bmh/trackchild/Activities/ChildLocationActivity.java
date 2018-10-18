@@ -1,5 +1,6 @@
-package com.bmh.trackchild;
+package com.bmh.trackchild.Activities;
 
+import com.bmh.trackchild.R;
 import com.bmh.trackchild.Tools.SharedPrefs;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -21,7 +22,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 
-public class ChildLocation extends FragmentActivity  {
+public class ChildLocationActivity extends FragmentActivity  {
 
     EditText lonEdt, latEdt, phoneEdt;
     Button sendBtn;

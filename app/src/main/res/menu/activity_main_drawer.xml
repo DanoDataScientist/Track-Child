@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group android:checkableBehavior="single">
+    <group android:checkableBehavior="single" android:visible="false" android:id="@+id/groupChild">
         <item android:id="@+id/nav_logout"
+            android:title="LogOut" />
+    </group>
+    <group android:checkableBehavior="single" android:visible="false" android:id="@+id/groupParent">
+        <item android:id="@+id/nav_childLocation"
+            android:title="Child Location" />
+        <item android:id="@+id/nav_parentLogout"
             android:title="LogOut" />
     </group>
 

@@ -2,7 +2,8 @@ package com.bmh.trackchild.services;
 
 import java.util.HashSet;
 
-import com.bmh.trackchild.ChildLocation;
+import com.bmh.trackchild.Activities.ChildLocationActivity;
+import com.bmh.trackchild.Activities.OutRangeActivity;
 import com.bmh.trackchild.R;
 import com.bmh.trackchild.Tools.MediaAlert;
 import com.bmh.trackchild.Tools.SharedPrefs;
@@ -29,10 +30,10 @@ import android.widget.Toast;
 public class BluetoothService extends Service {
 
     BluetoothAdapter mBluetoothAdapter;
-    Thread thread;
+    public  static Thread thread;
     boolean threadFlag;
     HashSet<BluetoothDevice> devicesSet;
-    MediaAlert mediaAlert;
+   public static MediaAlert mediaAlert;
 
     @Override
     public void onCreate() {
@@ -45,39 +46,6 @@ public class BluetoothService extends Service {
         discoverDevices();
     }
 
-
-    public void displayAlertDialog() {
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(BluetoothService.this);
-        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        final View content = inflater.inflate(R.layout.confirmation_dialog, null);
-        ((TextView) content.findViewById(R.id.txtTitle)).setText(getApplicationContext().getResources().getString(R.string.out_of_range));
-        ((TextView) content.findViewById(R.id.btnYes)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                thread.interrupted();
-                mediaAlert.stopAlert();
-                startActivity(new Intent(BluetoothService.this, ChildLocation.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
-
-            }
-        });
-        ((TextView) content.findViewById(R.id.btnNo)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mediaAlert.stopAlert();
-
-            }
-        });
-        builder.setView(content);
-        builder.setCancelable(false);
-
-        AlertDialog alert = builder.create();
-        alert.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
-        alert.getWindow().getAttributes().gravity = Gravity.CENTER;
-        alert.show();
-
-
-    }
 
 
     private void discoverDevices() {
@@ -132,8 +100,9 @@ public class BluetoothService extends Service {
 
                 } else {
                     // ////////alert that your child's device not found/////////////
-                   mediaAlert.startAlert();
-                    displayAlertDialog();
+                    startPeriodicDiscovery();
+                    mediaAlert.startAlert();
+                    startActivity(new Intent(BluetoothService.this, OutRangeActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
                     devicesSet.clear();
                 }
 

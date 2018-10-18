@@ -1,6 +1,6 @@
 package com.bmh.trackchild.reciever;
 
-import com.bmh.trackchild.ChildLocation;
+import com.bmh.trackchild.Activities.ChildLocationActivity;
 import com.bmh.trackchild.services.GPSLocationService;
 
 import android.content.BroadcastReceiver;
@@ -54,7 +54,7 @@ public class SMSReceiver extends BroadcastReceiver
 			// Parent's mobile receive location SMS
 			else if (smsBody.startsWith("Location")) 
 			{
-				intent = new Intent(context, ChildLocation.class);
+				intent = new Intent(context, ChildLocationActivity.class);
 				intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 				intent.putExtra("smsBody", smsBody);
 		
