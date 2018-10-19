@@ -4,7 +4,6 @@ import com.bmh.trackchild.helper.LocationHelper;
 
 import android.app.Service;
 import android.content.Intent;
-import android.location.Location;
 import android.os.AsyncTask;
 import android.os.IBinder;
 import android.telephony.SmsManager;
@@ -15,7 +14,6 @@ public class GPSLocationService extends Service {
 
     LocationHelper myLocationHelper;
     LocationWorker locationTask;
-    Location location;
     double longitude, latitude;
     String fromPhoneNum;
 
@@ -68,7 +66,7 @@ public class GPSLocationService extends Service {
         @Override
         protected Boolean doInBackground(Void... params) {
             //while the location helper has not got a lock
-            while (myLocationHelper.gotLocation() == false) {
+            while (!myLocationHelper.gotLocation()) {
                 //do nothing, just wait
                 Log.i("GPSLocationService", "service getting location");
                 //showToast("false");

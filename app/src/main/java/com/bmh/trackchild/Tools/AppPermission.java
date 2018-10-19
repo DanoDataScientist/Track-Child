@@ -10,8 +10,10 @@ import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
+import android.util.Log;
 
 
+import com.bmh.trackchild.R;
 import com.bmh.trackchild.UI.ConfirmDialogs;
 
 import java.util.ArrayList;
@@ -20,10 +22,8 @@ import java.util.List;
 public class AppPermission {
 
 
-    Activity activity;
-    SharedPrefs Prefs;
-    public static String DENY_PERMISSION="deny";
-    public static String NEVER_ASK_PERMISSION="never";
+    private Activity activity;
+    private SharedPrefs Prefs;
 
 
     public AppPermission(Activity activity) {
@@ -31,56 +31,48 @@ public class AppPermission {
         Prefs = new SharedPrefs(activity);
     }
 
-    @TargetApi(Build.VERSION_CODES.M)
-    public boolean checkAndRequestPermissions(String[] permissions, int requestCode) {
-
-        List<String> listPermissionsNeeded = new ArrayList<>();
-        for (String permission : permissions) {
-            if (activity.checkSelfPermission(permission) != PackageManager.PERMISSION_GRANTED) {
-                listPermissionsNeeded.add(permission);
-            }
-        }
-        if (!listPermissionsNeeded.isEmpty()) {
-            activity.requestPermissions(listPermissionsNeeded.toArray(new String[listPermissionsNeeded.size()]), requestCode);
-            return true;
-        } else {
-            return false;
-        }
+    public void askPermissions(String[] permissions, int requestCode) {
+        ActivityCompat.requestPermissions(activity, permissions, requestCode);
     }
 
-    public static boolean hasPermissions(Context context, String... permissions) {
-        if (context != null && permissions != null) {
-            for (String permission : permissions) {
-                if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
-                    return true;
-                }
+    //return false if all permissions are granted and true if there is permission not granted
+    public boolean hasPermissions(String[] permissions) {
+        for (String permission : permissions) {
+            //permission is not granted
+            if (ActivityCompat.checkSelfPermission(activity, permission) != PackageManager.PERMISSION_GRANTED) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean shouldShowRequest(String[] permissions) {
+        for (String permission : permissions) {
+            //permission is not granted
+            if (ActivityCompat.shouldShowRequestPermissionRationale(activity, permission)) {
+                return true;
             }
         }
         return false;
     }
 
     @TargetApi(Build.VERSION_CODES.M)
-    public void handleOnRequestPermission(int[] grantResults, int grantResult, String[] permissions, String permission, int firstDenyResId, int neverAskResId) {
-        if (grantResults.length > 0 && grantResult == PackageManager.PERMISSION_GRANTED) {
-            if (!hasPermissions(activity, permissions)) {
-                ((AppPermissionInterFace) activity).onAllPermissionGranted();
-
-            }
+    public void handlePermissionResult(String[] permissions) {
+        if (!hasPermissions(permissions)) {
+            ((AppPermissionInterFace) activity).onAllPermissionGranted();
         }
         //Permission is denied
         else {
             //Permission denied only
-            if (activity.shouldShowRequestPermissionRationale(permission)) {
-
-                ConfirmDialogs dialogFragment = ConfirmDialogs.newInstance(activity.getResources().getString(firstDenyResId), StaticValues.DIALOG_TYPE_YES_NO);
-                dialogFragment.show(activity.getFragmentManager(), DENY_PERMISSION);
+            if (shouldShowRequest(permissions)) {
+                ConfirmDialogs dialogFragment = ConfirmDialogs.newInstance(activity.getResources().getString(R.string.first_deny), StaticValues.DIALOG_TYPE_YES_NO);
+                dialogFragment.show(activity.getFragmentManager(), StaticValues.DENY_PERMISSION);
             }
             //permission denied and disabled
             else {
-                ConfirmDialogs dialogFragment = ConfirmDialogs.newInstance(activity.getResources().getString(neverAskResId), StaticValues.DIALOG_TYPE_YES_NO);
-                dialogFragment.show(activity.getFragmentManager(), NEVER_ASK_PERMISSION);
+                ConfirmDialogs dialogFragment = ConfirmDialogs.newInstance(activity.getResources().getString(R.string.never_ask_deny), StaticValues.DIALOG_TYPE_YES_NO);
+                dialogFragment.show(activity.getFragmentManager(), StaticValues.NEVER_ASK_PERMISSION);
             }
-
         }
     }
 

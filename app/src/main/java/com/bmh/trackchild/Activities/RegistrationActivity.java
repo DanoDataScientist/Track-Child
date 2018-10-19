@@ -5,16 +5,21 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.bmh.trackchild.R;
+import com.bmh.trackchild.Tools.AppPermission;
+import com.bmh.trackchild.Tools.AppPermissionInterFace;
 import com.bmh.trackchild.Tools.Images;
 import com.bmh.trackchild.Tools.SharedPrefs;
 import com.bmh.trackchild.Tools.StaticValues;
+import com.bmh.trackchild.UI.ConfirmDialogInterface;
 
 import android.annotation.SuppressLint;
 
+import android.app.DialogFragment;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
@@ -34,15 +39,16 @@ import de.hdodenhof.circleimageview.CircleImageView;
  else
  >>user is a child and he/she must input his/her parent's phone number
  **/
-public class RegistrationActivity extends AppCompatActivity implements OnClickListener {
+public class RegistrationActivity extends AppCompatActivity implements OnClickListener, AppPermissionInterFace, ConfirmDialogInterface {
 
     CircleImageView ivBrowse;
     EditText edtName, edtUserName, edtPhone;
     Button btnSave;
-    Images images = new Images();
+    Images images;
     int userType;
     String imgName = "";
     String imgContentDescription = "";
+    AppPermission appPermission;
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
@@ -50,15 +56,17 @@ public class RegistrationActivity extends AppCompatActivity implements OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
         initComponent();
+        images = new Images(this);
+        appPermission = new AppPermission(this);
         setProfileImage(savedInstanceState);
     }
 
     private void initComponent() {
-        edtName = (EditText) findViewById(R.id.edtName);
-        edtUserName = (EditText) findViewById(R.id.edtUserName);
-        edtPhone = (EditText) findViewById(R.id.edtPhone);
-        btnSave = (Button) findViewById(R.id.btnSave);
-        ivBrowse = (CircleImageView) findViewById(R.id.ivBrowse);
+        edtName =  findViewById(R.id.edtName);
+        edtUserName =  findViewById(R.id.edtUserName);
+        edtPhone =  findViewById(R.id.edtPhone);
+        btnSave =  findViewById(R.id.btnSave);
+        ivBrowse =  findViewById(R.id.ivBrowse);
         btnSave.setOnClickListener(this);
         ivBrowse.setOnClickListener(this);
 
@@ -125,15 +133,21 @@ public class RegistrationActivity extends AppCompatActivity implements OnClickLi
 
     private void browseImage() {
         imgName = "img_" + System.currentTimeMillis() + ".jpg";
-        images.getImageSource(this, StaticValues.SELECT_IMAGE_CODE, imgName);
+        //require permissions in versions >= M
+        images.getImageSource(imgName, StaticValues.SELECT_IMAGE_CODE);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        appPermission.handlePermissionResult(permissions);
     }
 
     @SuppressLint("NewApi")
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (StaticValues.SELECT_IMAGE_CODE == requestCode && resultCode == RESULT_OK) {
-            Uri ImageURI = images.closeImageIntent(this, data, imgName);
-            imgContentDescription = images.UriToPath(this, ImageURI, data);
+            Uri ImageURI = images.closeImageIntent(imgName, data);
+            imgContentDescription = images.UriToPath(ImageURI, data);
             ivBrowse.setContentDescription(imgContentDescription);
             ivBrowse.setImageURI(Uri.parse(imgContentDescription));
 
@@ -192,5 +206,20 @@ public class RegistrationActivity extends AppCompatActivity implements OnClickLi
         sharedPrefs.savePreferences(R.string.Key_ParentName, edtUserName.getText().toString());
         sharedPrefs.savePreferences(R.string.Key_ParentPhone, edtPhone.getText().toString());
         sharedPrefs.savePreferences(R.string.Key_UserType, StaticValues.USER_IS_CHILD);
+    }
+
+    @Override
+    public void onAllPermissionGranted() {
+
+    }
+
+    @Override
+    public void onDialogPositiveClick(DialogFragment dialog) {
+        dialog.dismiss();
+    }
+
+    @Override
+    public void onDialogNegativeClick(DialogFragment dialog) {
+        dialog.dismiss();
     }
 }

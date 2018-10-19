@@ -11,6 +11,9 @@ public class StaticValues {
     public static final String USER_IS_PARENT="parent";
     public static final String USER_IS_CHILD="child";
 
+    public static final String DENY_PERMISSION="deny";
+    public static final String NEVER_ASK_PERMISSION="never";
+
     public static final int USER_PARENT=1;
     public static final int USER_CHILD=2;
 
@@ -23,7 +26,9 @@ public class StaticValues {
     public static final int DIALOG_TYPE_OK=3;
 
 
-    public static final int PERMISSIONS_REQUEST_ALL=6;
+    public static final int PERMISSIONS_REQUEST_ALL=1;
+
+    public static final int SETTING_REQUEST_CODE=1;
 
 
 

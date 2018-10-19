@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -16,22 +17,23 @@ import android.widget.Button;
 import com.bmh.trackchild.R;
 import com.bmh.trackchild.Tools.AppPermission;
 import com.bmh.trackchild.Tools.AppPermissionInterFace;
-import com.bmh.trackchild.Tools.PermissionUtil;
 import com.bmh.trackchild.Tools.SharedPrefs;
 import com.bmh.trackchild.Tools.StaticValues;
 import com.bmh.trackchild.UI.ConfirmDialogInterface;
 
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
-import static android.Manifest.permission.SEND_SMS;
+import static android.Manifest.permission.RECEIVE_SMS;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener,AppPermissionInterFace,ConfirmDialogInterface {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, AppPermissionInterFace, ConfirmDialogInterface {
 
     Button btnParent, btnChild;
     SharedPrefs sharedPrefs;
     AppPermission appPermission;
     Intent intent;
+    String[] PERMISSIONS = new String[]{ACCESS_FINE_LOCATION, RECEIVE_SMS, WRITE_EXTERNAL_STORAGE};
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -77,8 +79,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void initComponent() {
-        btnParent = (Button) findViewById(R.id.btnParent);
-        btnChild = (Button) findViewById(R.id.btnChild);
+        btnParent = findViewById(R.id.btnParent);
+        btnChild = findViewById(R.id.btnChild);
 
         btnParent.setOnClickListener(this);
         btnChild.setOnClickListener(this);
@@ -97,8 +99,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
         }
 
-        if (PermissionUtil.shouldAskPermission()) {
-            appPermission.checkAndRequestPermissions(new String[]{ACCESS_FINE_LOCATION, SEND_SMS, WRITE_EXTERNAL_STORAGE}, StaticValues.PERMISSIONS_REQUEST_ALL);
+        if (appPermission.hasPermissions(PERMISSIONS)) {
+            appPermission.askPermissions(PERMISSIONS, StaticValues.PERMISSIONS_REQUEST_ALL);
         } else {
             startActivity(intent);
         }
@@ -106,34 +108,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @TargetApi(Build.VERSION_CODES.M)
     @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        for (int i = 0; i < permissions.length; i++) {
-            if (permissions[i].equals(ACCESS_FINE_LOCATION)) {
-                appPermission.handleOnRequestPermission(grantResults,grantResults[i],permissions,permissions[i],R.string.location_first_deny,R.string.location_never_ask_deny);
-            } else if (permissions[i].equals(SEND_SMS)) {
-                appPermission.handleOnRequestPermission(grantResults,grantResults[i],permissions,permissions[i],R.string.SMS_first_deny,R.string.SMS_never_ask_deny);
-
-            } else if (permissions[i].equals(WRITE_EXTERNAL_STORAGE)) {
-                appPermission.handleOnRequestPermission(grantResults,grantResults[i],permissions,permissions[i],R.string.SD_first_deny,R.string.SD_never_ask_deny);
-            }
-        }
+    public void onRequestPermissionsResult(int requestCode,@Nullable  String[] permissions,@Nullable int[] grantResults) {
+        appPermission.handlePermissionResult(permissions);
     }
 
     @Override
     public void onAllPermissionGranted() {
+
         startActivity(intent);
     }
 
     @Override
     public void onDialogPositiveClick(DialogFragment dialog) {
-        if(dialog.getTag().equals(AppPermission.DENY_PERMISSION)) {
-            ActivityCompat.requestPermissions(this, new String[]{ACCESS_FINE_LOCATION, SEND_SMS, WRITE_EXTERNAL_STORAGE}, StaticValues.PERMISSIONS_REQUEST_ALL);
-        }
-        else {
+        if (dialog.getTag().equals(StaticValues.DENY_PERMISSION)) {
+            appPermission.askPermissions(PERMISSIONS, StaticValues.PERMISSIONS_REQUEST_ALL);
+        } else {
             appPermission.navigateToAppSetting();
         }
         dialog.dismiss();
     }
+
 
     @Override
     public void onDialogNegativeClick(DialogFragment dialog) {

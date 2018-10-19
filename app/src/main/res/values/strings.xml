@@ -26,31 +26,9 @@
     <string name="out_of_range">Your Child\'s Device is out of Range.Do you want to get your child location?</string>
 
     <!--Permissions-->
-    <string name="IsFirstLocationPer">isFirstLocationPer</string>
-    <string name="location_first_deny">To use application you must allow access location.Do you want continue?</string>
-    <string name="location_never_ask_deny">To use application you must allow access location.Do you want go to setting?</string>
-
-    <string name="IsFirstBLTPer">isFirstBLTPer</string>
-    <string name="BLT_first_deny">To use application you must allow access Bluetooth.Do you want continue?</string>
-    <string name="BLT_never_ask_deny">To use application you must allow access Bluetooth.Do you want go to setting?</string>
-
-    <string name="IsFirstSMSPer">isFirstSMSPer</string>
-    <string name="SMS_first_deny">To use application you must allow read and sent SMS .Do you want continue?</string>
-    <string name="SMS_never_ask_deny">To use application you must allow read and sent SMS.Do you want go to setting?</string>
-
-    <string name="IsFirstCameraPer">isFirstCameraPer</string>
-    <string name="camera_first_deny">To set profile picture by camera you must allow access camera .Do you want continue?</string>
-    <string name="camera_never_ask_deny">To set profile picture by camera you must allow access camera.Do you want go to setting?</string>
-
-    <string name="IsFirstSDPer">isFirstSDPer</string>
-    <string name="SD_first_deny">To set profile picture from gallery you must allow access SD card .Do you want continue?</string>
-    <string name="SD_never_ask_deny">To set profile picture from gallery you must allow access SD card.Do you want go to setting?</string>
-
-<string name="location_is_granted">location_is_granted</string>
-    <string name="sms_is_granted">sms_is_granted</string>
-
-    <string name="blt_is_granted">blt_is_granted</string>
-
+    <string name="first_deny">To use application features you must allow all permissions.Do you want continue?</string>
+    <string name="never_ask_deny">To use application features you must allow all permissions.Do you want go to setting?</string>
+   -->
     <!--Main Activity-->
     <string name="ParentSingUP">Parent sing up</string>
     <string name="ChildSingUP">Child sing up</string>
